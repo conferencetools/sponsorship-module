@@ -4,7 +4,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.0.5",
-    "carnage/cqrs": "~0.1.2",
+    "carnage/cqrs": "dev-master as 0.1.999",
     "carnage/cqorms": "~0.1.0",
     "doctrine/doctrine-orm-module": "^1.0.0",
     "doctrine/common": "^2.6.0",
