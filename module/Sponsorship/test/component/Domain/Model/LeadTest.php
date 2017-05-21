@@ -1,6 +1,6 @@
 <?php
 
-namespace ConferenceTools\Sponsorship\Domain\Model\Lead;
+namespace ConferenceTools\Sponsorship\Domain\Model;
 
 use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
@@ -10,6 +10,7 @@ use Carnage\Cqrs\Persistence\Repository\AggregateRepository;
 use ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead;
 use ConferenceTools\Sponsorship\Domain\CommandHandler\Lead as LeadCommandHandler;
 use ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired;
+use ConferenceTools\Sponsorship\Domain\Model\Lead\Lead;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use PHPUnit\Framework\TestCase;
 use Zend\Log\Logger;
