@@ -3,6 +3,9 @@
         <testsuite name="Sponsorship domain unit tests">
             <directory>module/Sponsorship/test/unit/Domain</directory>
         </testsuite>
+        <testsuite name="Sponsorship domain component tests">
+            <directory>module/Sponsorship/test/component/Domain</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
