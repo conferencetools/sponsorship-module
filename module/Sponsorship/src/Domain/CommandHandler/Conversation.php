@@ -6,6 +6,7 @@ use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\Repository\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
+use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead;
 use ConferenceTools\Sponsorship\Domain\Model\Conversation\Conversation as ConversationAggregate;
 
@@ -37,8 +38,18 @@ class Conversation extends AbstractMethodNameMessageHandler
         $this->conversationRepository->save($conversation);
     }
 
+
+    protected function handleSendMessage(SendMessage $command)
+    {
+        $conversation = $this->loadConversation($command->getConversationId());
+        $conversation->messageSent($command->getMessage());
+        $this->conversationRepository->save($conversation);
+    }
+
     protected function loadConversation(string $conversationId): ConversationAggregate
     {
-        return $conversation = $this->conversationRepository->load($conversationId);
+        /** @var ConversationAggregate $conversation */
+        $conversation = $this->conversationRepository->load($conversationId);
+        return $conversation;
     }
 }

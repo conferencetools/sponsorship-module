@@ -9,7 +9,10 @@ use Carnage\Cqrs\MessageBus\MessageInterface;
 use Carnage\Cqrs\Persistence\EventStore\InMemoryEventStore;
 use Carnage\Cqrs\Persistence\Repository\AggregateRepository;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
+use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\Model\Conversation\Conversation;
 use ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation as ConversationCommandHandler;
@@ -60,6 +63,32 @@ class ConversationTest extends TestCase
         self::assertCount(1, $messageBus->messages);
         $domainMessage = $messageBus->messages[0]->getEvent();
 
+        self::assertInstanceOf(MessageReceived::class, $domainMessage);
+        self::assertSame($message, $domainMessage->getMessage());
+        self::assertSame($contact, $domainMessage->getFrom());
+        self::assertEquals('1', $domainMessage->getId());
+    }
+
+    public function testMessageSent()
+    {
+        $idGenerator = $this->makeIdGenerator();
+        $messageBus = $this->makeMessageBus();
+        $eventStore = $this->makeEventStore(Conversation::class, '1', [new StartedWithLead('1', 'LeadId')]);
+
+        $repository = $this->makeRepository($messageBus, $eventStore);
+        $sut = $this->makeCommandHandler($repository, $idGenerator);
+
+        $message = new Message('Re:Sponsorship', 'Thanks');
+        $command = new SendMessage('1', $message);
+
+        $sut->handle($command);
+
+        self::assertCount(1, $messageBus->messages);
+        $domainMessage = $messageBus->messages[0]->getEvent();
+
+        self::assertInstanceOf(MessageSent::class, $domainMessage);
+        self::assertSame($message, $domainMessage->getMessage());
+        self::assertEquals('1', $domainMessage->getId());
     }
 
     /**

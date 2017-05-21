@@ -4,6 +4,7 @@ namespace ConferenceTools\Sponsorship\Domain\Model\Conversation;
 
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
@@ -47,5 +48,16 @@ class Conversation extends AbstractAggregate
     protected function applyMessageReceived(MessageReceived $event)
     {
         $this->messages[] = InboundMessage::fromMessageReceivedEvent($event);
+    }
+
+    public function messageSent(Message $message)
+    {
+        $event = new MessageSent($this->id, $message);
+        $this->apply($event);
+    }
+
+    protected function applyMessageSent(MessageSent $event)
+    {
+        $this->messages[] = OutboundMessage::fromMessageSentEvent($event);
     }
 }
