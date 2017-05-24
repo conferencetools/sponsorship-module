@@ -5,6 +5,9 @@ namespace ConferenceTools\Sponsorship\Domain\Model\Conversation;
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
@@ -14,6 +17,7 @@ class Conversation extends AbstractAggregate
     private $id;
     private $leadId;
     private $messages;
+    private $numberOfChaseMessages = 0;
 
     /**
      * @return mixed
@@ -48,6 +52,7 @@ class Conversation extends AbstractAggregate
     protected function applyMessageReceived(MessageReceived $event)
     {
         $this->messages[] = InboundMessage::fromMessageReceivedEvent($event);
+        $this->numberOfChaseMessages = 0;
     }
 
     public function messageSent(Message $message)
@@ -59,5 +64,22 @@ class Conversation extends AbstractAggregate
     protected function applyMessageSent(MessageSent $event)
     {
         $this->messages[] = OutboundMessage::fromMessageSentEvent($event);
+    }
+
+    public function escalateReply()
+    {
+        $event = new ReplyOutstanding($this->id, $this->numberOfChaseMessages);
+        $this->apply($event);
+    }
+
+    public function escalateResponse()
+    {
+        $event = new ResponseOutstanding($this->id, $this->numberOfChaseMessages);
+        $this->apply($event);
+    }
+
+    protected function applyResponseOutstanding(ResponseOutstanding $event)
+    {
+        $this->numberOfChaseMessages ++;
     }
 }
