@@ -52,7 +52,7 @@ abstract class AbstractBusTest extends TestCase
     {
         $this->messageBus = new class implements MessageBusInterface
         {
-            public $messages;
+            public $messages = [];
 
             public function dispatch(MessageInterface $message)
             {

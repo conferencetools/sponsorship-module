@@ -8,6 +8,7 @@ use Carnage\Cqrs\Persistence\Repository\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyTimeout;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout;
 use ConferenceTools\Sponsorship\Domain\Process\Conversation as ConversationProcess;
 
 class Conversation extends AbstractMethodNameMessageHandler
@@ -26,15 +27,14 @@ class Conversation extends AbstractMethodNameMessageHandler
     protected function handleMessageReceived(MessageReceived $event)
     {
         $process = $this->loadProcess($event->getId());
-        $process->messageReceived();
-        $process->apply($event);
+        $process->messageReceived($event);
         $this->repository->save($process);
     }
 
     protected function handleMessageSent(MessageSent $event)
     {
         $process = $this->loadProcess($event->getId());
-        $process->apply($event);
+        $process->messageSent($event);
         $this->repository->save($process);
     }
 
@@ -42,7 +42,13 @@ class Conversation extends AbstractMethodNameMessageHandler
     {
         $process = $this->loadProcess($event->getConversationId());
         $process->replyTimeout();
-        $process->apply($event);
+        $this->repository->save($process);
+    }
+
+    protected function handleResponseTimeout(ResponseTimeout $event)
+    {
+        $process = $this->loadProcess($event->getConversationId());
+        $process->responseTimeout();
         $this->repository->save($process);
     }
 
