@@ -1,0 +1,92 @@
+<?php
+
+namespace ConferenceTools\Sponsorship\Domain\Projection;
+
+use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
+use ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired;
+use ConferenceTools\Sponsorship\Domain\ReadModel\Task\Task as TaskEntity;
+use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
+use Doctrine\Common\Collections\Criteria;
+
+class Task extends AbstractMethodNameMessageHandler
+{
+    private $repository;
+
+    /**
+     * @TODO replace with interface.
+     */
+    public function __construct(DoctrineRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    protected function handleStartedWithLead(StartedWithLead $event)
+    {
+        $task = TaskEntity::sendFirstEmail($event->getLeadId(), $event->getId());
+        $this->repository->add($task);
+        $this->repository->commit();
+    }
+
+    protected function handleMessageReceived(MessageReceived $event)
+    {
+        //setup a task to reply to the message
+        $task = TaskEntity::replyToMessage($event->getId());
+        $this->repository->add($task);
+        //close any task for sending chase emails
+        $this->closeTasks($event->getId(), [TaskEntity::TYPE_SEND_FOLLOW_UP]);
+        $this->repository->commit();
+    }
+
+    protected function handleMessageSent(MessageSent $event)
+    {
+        //close any task for replying to a message and for sending the first message
+        $this->closeTasks(
+            $event->getId(),
+            [
+                TaskEntity::TYPE_SEND_FOLLOW_UP,
+                TaskEntity::TYPE_SENT_FIRST_EMAIL,
+                TaskEntity::TYPE_REPLY_TO_MESSAGE
+            ]
+        );
+        $this->repository->commit();
+    }
+
+    protected function handleReplyOutstanding(ReplyOutstanding $event)
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('conversationId', $event->getId()));
+
+        /** @var TaskEntity $task */
+        $task = $this->repository->matching($criteria)->current();
+        $task->escalate();
+        $this->repository->commit();
+    }
+
+    protected function handleResponseOutstanding(ResponseOutstanding $event)
+    {
+        //setup a task to send chase email
+        $task = TaskEntity::sendFollowUp($event->getId());
+        $this->repository->add($task);
+        $this->repository->commit();
+    }
+
+    /**
+     * @param MessageSent $event
+     */
+    protected function closeTasks(string $conversationId, array $taskTypes)
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('conversationId', $conversationId));
+        $criteria->andWhere(Criteria::expr()->in('taskType', $taskTypes));
+
+        $tasks = $this->repository->matching($criteria);
+        foreach ($tasks as $task) {
+            $this->repository->remove($task);
+        }
+    }
+}
