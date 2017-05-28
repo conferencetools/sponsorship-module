@@ -6,7 +6,6 @@ class Contact
 {
     private $name;
     private $email;
-    private $phoneNumber;
 
     /**
      * Contact constructor.
@@ -14,11 +13,10 @@ class Contact
      * @param $email
      * @param $phoneNumber
      */
-    public function __construct($name, $email, $phoneNumber)
+    public function __construct($name, $email)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->phoneNumber = $phoneNumber;
     }
 
     /**
@@ -35,13 +33,5 @@ class Contact
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
     }
 }
