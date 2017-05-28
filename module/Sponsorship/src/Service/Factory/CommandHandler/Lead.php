@@ -20,7 +20,7 @@ class Lead implements FactoryInterface
     public function __invoke(ContainerInterface $container, $name, $options = [])
     {
         $repositoryManager = $container->get(RepositoryManager::class);
-        new LeadCommandHandler(
+        return new LeadCommandHandler(
             $repositoryManager->get(LeadAggregate::class),
             new YouTubeStyleIdentityGenerator()
         );

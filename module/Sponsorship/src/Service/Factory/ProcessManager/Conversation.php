@@ -19,6 +19,6 @@ class Conversation implements FactoryInterface
     public function __invoke(ContainerInterface $container, $name, $options = [])
     {
         $repositoryManager = $container->get(RepositoryManager::class);
-        new ConversationProcessManager($repositoryManager->get(ConversationProcess::class));
+        return new ConversationProcessManager($repositoryManager->get(ConversationProcess::class));
     }
 }

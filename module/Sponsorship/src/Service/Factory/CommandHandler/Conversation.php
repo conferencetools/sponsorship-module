@@ -20,7 +20,7 @@ class Conversation implements FactoryInterface
     public function __invoke(ContainerInterface $container, $name, $options = [])
     {
         $repositoryManager = $container->get(RepositoryManager::class);
-        new ConversationCommandHandler(
+        return new ConversationCommandHandler(
             $repositoryManager->get(ConversationAggregate::class),
             new YouTubeStyleIdentityGenerator()
         );
