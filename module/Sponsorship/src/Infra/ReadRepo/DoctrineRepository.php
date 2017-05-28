@@ -2,13 +2,9 @@
 
 namespace ConferenceTools\Sponsorship\Infra\ReadRepo;
 
-use Closure;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Traversable;
 
 class DoctrineRepository implements Selectable //implements ReadRepository
 {

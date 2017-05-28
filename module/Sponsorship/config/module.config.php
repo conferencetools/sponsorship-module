@@ -20,10 +20,17 @@ return [
     ],
     'command_handlers' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\CommandHandler\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\CommandHandler\Lead::class,
         ],
     ],
-    'process_managers' => [],
-    'command_subscriptions' => [
+    'process_managers' => [
+        'factories' => [
+            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\ProcessManager\Conversation::class,
+        ],
     ],
     'event_listeners' => [
         'factories' => [
@@ -31,9 +38,54 @@ return [
     ],
     'projections' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\Projection\Task::class,
         ],
     ],
+    'command_subscriptions' => [
+        \ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock::class,
+        \ConferenceTools\Sponsorship\Domain\Command\AlarmClock\WakeUp::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock::class,
+
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateReply::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+
+        \ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class,
+    ],
     'domain_event_subscriptions' => [
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived::class => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent::class => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding::class => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyTimeout::class => [
+            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding::class => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout::class => [
+            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead::class => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+        ],
     ],
     'controllers' => [
         'factories' => [
