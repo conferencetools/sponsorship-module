@@ -81,4 +81,18 @@ class Task
     {
         $this->priority++;
     }
+
+    public function getDescription()
+    {
+        switch ($this->taskType) {
+            case self::TYPE_SENT_FIRST_EMAIL:
+                return 'Send first email';
+
+            case self::TYPE_REPLY_TO_MESSAGE:
+                return 'Reply to email';
+
+            case self::TYPE_SEND_FOLLOW_UP:
+                return 'No response yet, follow up';
+        }
+    }
 }
