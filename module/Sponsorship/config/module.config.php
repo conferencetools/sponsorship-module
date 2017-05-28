@@ -91,7 +91,9 @@ return [
     'controllers' => [
         'factories' => [
             \ConferenceTools\Sponsorship\Controller\TaskController::class =>
-                \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class
+                \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
+            \ConferenceTools\Sponsorship\Controller\LeadController::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
         ],
     ],
     'view_helpers' => [
@@ -110,7 +112,8 @@ return [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
-            'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml'
+            'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml',
+            'sponsorship/lead/new-lead' => __DIR__ . '/../view/sponsorship/lead/new-lead.phtml',
         ],
         'controller_map' => [
             'ConferenceTools\Sponsorship\Controller' => 'sponsorship',
