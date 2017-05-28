@@ -1,4 +1,5 @@
 <?php
+use ConferenceTools\Sponsorship\Controller;
 
 return [
     'root' => [
@@ -6,7 +7,7 @@ return [
         'options' => [
             'route' => '/',
             'defaults' => [
-                'controller' => '',
+                'controller' => Controller\TaskController::class,
                 'action' => 'index',
             ],
         ],

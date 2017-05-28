@@ -1,0 +1,22 @@
+<table class="table table-striped table-hover">
+
+    <thead>
+    <tr>
+        <th>Task Type</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->tasks as $task):?>
+        <tr>
+            <td><?=$task->getDescription()?></td>
+            <td>
+                <a href="<?=1//$this->url('rentals/client/client', ['clientId' => $client->getId()])?>">
+                    Do task
+                </a>
+            </td>
+        </tr>
+    <?php endforeach?>
+    </tbody>
+
+</table>

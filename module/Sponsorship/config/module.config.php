@@ -7,6 +7,7 @@ return [
     'navigation' => [
         'default' => require __DIR__ . '/navigation.config.php',
     ],
+    'asset_manager' => require __DIR__ . '/asset.config.php',
     'service_manager' => [
         'factories' => [
         ],
@@ -89,6 +90,8 @@ return [
     ],
     'controllers' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\Controller\TaskController::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class
         ],
     ],
     'view_helpers' => [
@@ -107,6 +110,7 @@ return [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
+            'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml'
         ],
         'controller_map' => [
             'ConferenceTools\Sponsorship\Controller' => 'sponsorship',
