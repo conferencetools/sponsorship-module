@@ -45,6 +45,8 @@ return [
         'factories' => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\Projection\Task::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\Projection\Conversation::class,
         ],
     ],
     'command_subscriptions' => [
@@ -71,10 +73,12 @@ return [
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
@@ -90,6 +94,7 @@ return [
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired::class => [
             \ConferenceTools\Sponsorship\Domain\EventListener\StartConversation::class
