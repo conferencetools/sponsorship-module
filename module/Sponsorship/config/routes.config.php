@@ -33,7 +33,28 @@ return [
                         'may_terminate' => true,
                     ]
                 ]
-            ]
+            ],
+            'conversation' => [
+                'type' => \Zend\Mvc\Router\Http\Segment::class,
+                'options' => [
+                    'route' => 'conversation/',
+                    'defaults' => [
+                        'controller' => Controller\ConversationController::class
+                    ]
+                ],
+                'child_routes' => [
+                    'reply' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => 'reply/:conversationId',
+                            'defaults' => [
+                                'action' => 'reply'
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ]
+                ]
+            ],
         ],
     ],
 ];

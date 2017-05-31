@@ -11,8 +11,8 @@
         <tr>
             <td><?=$task->getDescription()?></td>
             <td>
-                <a href="<?=1//$this->url('rentals/client/client', ['clientId' => $client->getId()])?>">
-                    Do task
+                <a href="<?=$this->url('root/conversation/reply', ['conversationId' => $task->getConversationId()])?>">
+                    Reply
                 </a>
             </td>
         </tr>

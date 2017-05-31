@@ -95,4 +95,36 @@ class Task
                 return 'No response yet, follow up';
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getConversationId(): string
+    {
+        return $this->conversationId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLeadId(): string
+    {
+        return $this->leadId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaskType(): string
+    {
+        return $this->taskType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
 }

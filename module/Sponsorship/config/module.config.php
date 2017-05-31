@@ -21,6 +21,8 @@ return [
     ],
     'command_handlers' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\CommandHandler\AlarmClock::class,
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\CommandHandler\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class =>
@@ -99,6 +101,8 @@ return [
                 \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
             \ConferenceTools\Sponsorship\Controller\LeadController::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
+            \ConferenceTools\Sponsorship\Controller\ConversationController::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
         ],
     ],
     'view_helpers' => [
@@ -119,6 +123,7 @@ return [
             'error/index' => __DIR__ . '/../view/error/index.phtml',
             'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml',
             'sponsorship/lead/new-lead' => __DIR__ . '/../view/sponsorship/lead/new-lead.phtml',
+            'sponsorship/conversation/reply' => __DIR__ . '/../view/sponsorship/conversation/reply.phtml',
         ],
         'controller_map' => [
             'ConferenceTools\Sponsorship\Controller' => 'sponsorship',
