@@ -3,10 +3,12 @@
 namespace ConferenceTools\Sponsorship\Domain\Event\Conversation;
 
 use Carnage\Cqrs\Event\EventInterface;
+use JMS\Serializer\Annotation as JMS;
 
 class ReplyTimeout implements EventInterface
 {
     /**
+     * @JMS\Type("string")
      * @var string
      */
     private $conversationId;

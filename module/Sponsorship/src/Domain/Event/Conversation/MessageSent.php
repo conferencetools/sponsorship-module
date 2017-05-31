@@ -3,17 +3,19 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Event\Conversation;
 
-
+use JMS\Serializer\Annotation as JMS;
 use Carnage\Cqrs\Event\EventInterface;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
 
 class MessageSent implements EventInterface
 {
     /**
+     * @JMS\Type("string")
      * @var string
      */
     private $id;
     /**
+     * @JMS\Type("ConferenceTools\Sponsorship\Domain\ValueObject\Message")
      * @var Message
      */
     private $message;

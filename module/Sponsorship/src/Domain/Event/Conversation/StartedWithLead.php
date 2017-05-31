@@ -3,10 +3,20 @@
 namespace ConferenceTools\Sponsorship\Domain\Event\Conversation;
 
 use Carnage\Cqrs\Event\EventInterface;
+use JMS\Serializer\Annotation as JMS;
 
 class StartedWithLead implements EventInterface
 {
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
     private $id;
+
+    /**
+     * @var string
+     * @JMS\Type("string")
+     */
     private $leadId;
 
     /**
