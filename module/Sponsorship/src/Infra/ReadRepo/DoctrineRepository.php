@@ -17,6 +17,7 @@ class DoctrineRepository implements Selectable //implements ReadRepository
     public function __construct($entity, EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->entity = $entity;
     }
 
     public function add($element)
