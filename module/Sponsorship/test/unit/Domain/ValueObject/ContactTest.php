@@ -12,6 +12,5 @@ class ContactTest extends TestCase
 
         self::assertEquals('James', $sut->getName());
         self::assertEquals('james@sponsor.com', $sut->getEmail());
-        self::assertEquals('01223 445566', $sut->getPhoneNumber());
     }
 }

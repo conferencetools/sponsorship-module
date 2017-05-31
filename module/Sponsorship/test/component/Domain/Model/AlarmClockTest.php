@@ -13,7 +13,7 @@ class AlarmClockTest extends AbstractBusTest
 
     public function test_it_capture_the_delayed_message()
     {
-        $command = new SendAt(new WakeUp(), new \DateTime());
+        $command = new SendAt(new WakeUp(), new \DateTimeImmutable());
 
         $sut = new AlarmClockCommandHandler($this->repository);
         $this->setupLogger($sut);
@@ -26,7 +26,7 @@ class AlarmClockTest extends AbstractBusTest
 
     public function test_it_sends_the_delayed_message()
     {
-        $when = new \DateTime();
+        $when = new \DateTimeImmutable();
         $deferredMessage = new WakeUp();
         $this->given(AlarmClock::class, AlarmClock::makeId($when), [new SendAt($deferredMessage, $when)]);
 
@@ -42,7 +42,7 @@ class AlarmClockTest extends AbstractBusTest
 
     public function test_it_doesnt_send_future_messages()
     {
-        $when = (new \DateTime())->add(new \DateInterval('PT1M'));
+        $when = (new \DateTimeImmutable())->add(new \DateInterval('PT1M'));
         $deferredMessage = new WakeUp();
         $this->given(AlarmClock::class, AlarmClock::makeId($when), [new SendAt($deferredMessage, $when)]);
 
