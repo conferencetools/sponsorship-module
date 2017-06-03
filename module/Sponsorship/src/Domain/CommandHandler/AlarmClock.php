@@ -21,7 +21,7 @@ class AlarmClock extends AbstractMethodNameMessageHandler
     protected function handleSendAt(SendAt $command)
     {
         $alarmClock = $this->loadAlarmClock(AlarmClockModel::makeId($command->getWhen()));
-        $alarmClock->sendAt($command);
+        $alarmClock->sendAt($command->getMessage(), $command->getWhen());
         $this->repository->save($alarmClock);
     }
 

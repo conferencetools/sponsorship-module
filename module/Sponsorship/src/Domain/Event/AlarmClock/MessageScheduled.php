@@ -1,12 +1,12 @@
 <?php
 
-namespace ConferenceTools\Sponsorship\Domain\Command\AlarmClock;
+namespace ConferenceTools\Sponsorship\Domain\Event\AlarmClock;
 
 use JMS\Serializer\Annotation as JMS;
-use Carnage\Cqrs\Command\CommandInterface;
+use Carnage\Cqrs\Event\EventInterface;
 use Carnage\Cqrs\MessageBus\MessageInterface;
 
-class SendAt implements CommandInterface
+class MessageScheduled implements EventInterface
 {
     /**
      * @JMS\Type("Object")
@@ -20,6 +20,11 @@ class SendAt implements CommandInterface
      */
     private $when;
 
+    /**
+     * MessageScheduled constructor.
+     * @param MessageInterface $message
+     * @param \DateTimeImmutable $when
+     */
     public function __construct(MessageInterface $message, \DateTimeImmutable $when)
     {
         $this->message = $message;
@@ -35,7 +40,7 @@ class SendAt implements CommandInterface
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return \DateTimeImmutable
      */
     public function getWhen(): \DateTimeImmutable
     {

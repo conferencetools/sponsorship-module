@@ -6,6 +6,7 @@ use Carnage\Cqrs\Aggregate\AggregateInterface;
 use Carnage\Cqrs\Event\DomainMessage;
 use Carnage\Cqrs\MessageBus\MessageInterface;
 use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt;
+use ConferenceTools\Sponsorship\Domain\Event\AlarmClock\MessageScheduled;
 
 class AlarmClock implements AggregateInterface
 {
@@ -24,19 +25,21 @@ class AlarmClock implements AggregateInterface
         return $this->id;
     }
 
-    public function sendAt(SendAt $command)
+    public function sendAt(MessageInterface $message, \DateTimeImmutable $when)
     {
         if ($this->id !== null) {
-            $this->validateBucket($command->getWhen());
+            $this->validateBucket($when);
         }
 
-        $this->apply($command);
+        $event = new MessageScheduled($message, $when);
+
+        $this->apply($event);
     }
 
-    protected function applySendAt(SendAt $command)
+    protected function applyMessageScheduled(MessageScheduled $event)
     {
-        $this->id = self::makeId($command->getWhen());
-        $this->queue->insert($command, $this->makePriority($command->getWhen()));
+        $this->id = self::makeId($event->getWhen());
+        $this->queue->insert($event, $this->makePriority($event->getWhen()));
     }
 
     public function wakeUp()
