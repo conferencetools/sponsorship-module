@@ -10,6 +10,8 @@ return [
     'asset_manager' => require __DIR__ . '/asset.config.php',
     'service_manager' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\Service\Mailgun\Client::class =>
+                \ConferenceTools\Sponsorship\Service\Mailgun\ClientFactory::class
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class,
@@ -17,6 +19,8 @@ return [
     ],
     'cli_commands' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\Cli\Command\RetrieveEvents::class =>
+                \ConferenceTools\Sponsorship\Cli\Command\RetrieveEventsFactory::class
         ],
     ],
     'command_handlers' => [
