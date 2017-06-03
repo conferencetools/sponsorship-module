@@ -2,7 +2,7 @@
 
 namespace ConferenceTools\Sponsorship\Service\Factory\Projection;
 
-use ConferenceTools\Sponsorship\Domain\Projection\Task as TaskProjection;
+use ConferenceTools\Sponsorship\Domain\Projection\Conversation as ConversationProjection;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation as ConversationEntity;
 use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\ORM\EntityManager;
@@ -22,6 +22,6 @@ class Conversation implements FactoryInterface
         $entityManager = $container->get(EntityManager::class);
         $repository = new DoctrineRepository(ConversationEntity::class, $entityManager);
 
-        return new TaskProjection($repository);
+        return new ConversationProjection($repository);
     }
 }
