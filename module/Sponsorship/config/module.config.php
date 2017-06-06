@@ -15,6 +15,7 @@ return [
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class,
+            \Zend\Navigation\Service\NavigationAbstractServiceFactory::class,
         ],
     ],
     'cli_commands' => [
