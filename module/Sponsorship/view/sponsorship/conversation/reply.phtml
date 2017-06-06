@@ -1,1 +1,54 @@
+<style>
+    .chat
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .chat li
+    {
+        padding: 25px;
+        border-bottom: 1px dotted #B3A9A9;
+    }
+
+    .chat li .chat-body p
+    {
+        margin: 0;
+        color: #777777;
+    }
+
+    .chat-img
+    {
+        margin-right: 15px;
+    }
+
+</style>
+
 <?=$this->form($this->form);?>
+
+<div class="container">
+    <div class="row">
+                <ul class="chat">
+    <?php foreach ($this->conversation->getMessages() as $message):?>
+        <li class="clearfix">
+            <span class="chat-img pull-left">
+                <?php if($message->getDirection() === 'outbound'):?>
+                <img src="http://placehold.it/50/55C1E8/fff&text=You" alt="User Avatar" class="img-circle" />
+                <?php else: ?>
+                    <img src="http://placehold.it/50/E7C155/fff&text=Lead" alt="User Avatar" class="img-circle" />
+                <?php endif?>
+            </span>
+            <div class="chat-body clearfix">
+                <div class="header">
+                    <strong class="primary-font"><?=$message->getMessage()->getSubject()?></strong>
+                </div>
+                <p><?=$message->getMessage()->getBody()?></p>
+            </div>
+        </li>
+    <?php endforeach;?>
+
+                </ul>
+        </div>
+</div>

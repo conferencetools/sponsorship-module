@@ -4,8 +4,12 @@ namespace ConferenceTools\Sponsorship\Controller;
 
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead;
+use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
+use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
@@ -18,8 +22,8 @@ class ConversationController extends AbstractController
     public function replyAction()
     {
         $form = new Form();
-        $form->add(new Text('subject'));
-        $form->add(new Textarea('body'));
+        $form->add(new Text('subject', ['label' => 'Subject']));
+        $form->add(new Textarea('body', ['label' => 'Body']));
         $form->add(new Submit('submit', ['label' => 'Send']));
 
         $conversationId = $this->params()->fromRoute('conversationId');
@@ -38,6 +42,12 @@ class ConversationController extends AbstractController
             }
         }
 
-        return new ViewModel(['form' => $form]);
+        $em = $this->getServiceLocator()->get(EntityManager::class);
+        $repo = new DoctrineRepository(Conversation::class, $em);
+        $search = Criteria::create();
+        $search->where(Criteria::expr()->eq('conversationId', $conversationId));
+        $conversation = $repo->matching($search)->first();
+
+        return new ViewModel(['form' => $form, 'conversation' => $conversation]);
     }
 }

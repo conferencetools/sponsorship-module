@@ -33,6 +33,7 @@ class Conversation
      *     cascade={"persist", "remove"},
      *     orphanRemoval=true
      *     )
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $messages;
 
