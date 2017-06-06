@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Model;
 
+use ConferenceTools\Sponsorship\Domain\Event\AlarmClock\MessageScheduled;
 use ConferenceTools\Sponsorship\Testing\AbstractBusTest;
 use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt;
 use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\WakeUp;
@@ -21,14 +22,14 @@ class AlarmClockTest extends AbstractBusTest
         $sut->handle($command);
 
         $event = $this->messageBus->messages[0]->getEvent();
-        self::assertSame($command, $event);
+        self::assertInstanceOf(MessageScheduled::class, $event);
     }
 
     public function test_it_sends_the_delayed_message()
     {
         $when = new \DateTimeImmutable();
         $deferredMessage = new WakeUp();
-        $this->given(AlarmClock::class, AlarmClock::makeId($when), [new SendAt($deferredMessage, $when)]);
+        $this->given(AlarmClock::class, AlarmClock::makeId($when), [new MessageScheduled($deferredMessage, $when)]);
 
         $sut = new AlarmClockCommandHandler($this->repository);
         $this->setupLogger($sut);
@@ -44,7 +45,7 @@ class AlarmClockTest extends AbstractBusTest
     {
         $when = (new \DateTimeImmutable())->add(new \DateInterval('PT1M'));
         $deferredMessage = new WakeUp();
-        $this->given(AlarmClock::class, AlarmClock::makeId($when), [new SendAt($deferredMessage, $when)]);
+        $this->given(AlarmClock::class, AlarmClock::makeId($when), [new MessageScheduled($deferredMessage, $when)]);
 
         $sut = new AlarmClockCommandHandler($this->repository);
         $this->setupLogger($sut);
