@@ -52,6 +52,8 @@ return [
                 \ConferenceTools\Sponsorship\Service\Factory\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\Projection\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\Projection\Lead::class,
         ],
     ],
     'command_subscriptions' => [
@@ -100,9 +102,11 @@ return [
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired::class => [
-            \ConferenceTools\Sponsorship\Domain\EventListener\StartConversation::class
+            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
+            \ConferenceTools\Sponsorship\Domain\EventListener\StartConversation::class,
         ],
     ],
     'controllers' => [
@@ -133,6 +137,7 @@ return [
             'error/index' => __DIR__ . '/../view/error/index.phtml',
             'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml',
             'sponsorship/lead/new-lead' => __DIR__ . '/../view/sponsorship/lead/new-lead.phtml',
+            'sponsorship/lead/index' => __DIR__ . '/../view/sponsorship/lead/index.phtml',
             'sponsorship/conversation/reply' => __DIR__ . '/../view/sponsorship/conversation/reply.phtml',
         ],
         'controller_map' => [

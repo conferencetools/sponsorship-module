@@ -1,0 +1,19 @@
+
+<table class="table table-striped table-hover">
+
+    <thead>
+    <tr>
+        <th>Company name</th>
+        <th>Contact</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->leads as $lead):?>
+    <tr>
+        <td><?=$lead->getCompanyName()?></td>
+        <td><?=$lead->getContact()->getName()?></td>
+    </tr>
+<?php endforeach?>
+</tbody>
+
+</table>

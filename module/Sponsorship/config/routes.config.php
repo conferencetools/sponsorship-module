@@ -18,9 +18,11 @@ return [
                 'options' => [
                     'route' => 'lead/',
                     'defaults' => [
-                        'controller' => Controller\LeadController::class
+                        'controller' => Controller\LeadController::class,
+                        'action' => 'index',
                     ]
                 ],
+                'may_terminate' => true,
                 'child_routes' => [
                     'new' => [
                         'type' => \Zend\Mvc\Router\Http\Segment::class,

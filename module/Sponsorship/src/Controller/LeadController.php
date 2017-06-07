@@ -3,7 +3,11 @@
 namespace ConferenceTools\Sponsorship\Controller;
 
 use ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead;
+use ConferenceTools\Sponsorship\Domain\ReadModel\Lead\Lead;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
+use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 use Zend\Form\Form;
@@ -12,12 +16,20 @@ use Zend\View\Model\ViewModel;
 
 class LeadController extends AbstractController
 {
+    public function indexAction()
+    {
+        $em = $this->getServiceLocator()->get(EntityManager::class);
+        $repo = new DoctrineRepository(Lead::class, $em);
+        $leads = $repo->matching(Criteria::create());
+        return new ViewModel(['leads' => $leads]);
+    }
+
     public function newLeadAction()
     {
         $form = new Form();
-        $form->add(new Text('company_name'));
-        $form->add(new Text('contact_name'));
-        $form->add(new Text('contact_email'));
+        $form->add(new Text('company_name', ['label' => 'Company name']));
+        $form->add(new Text('contact_name', ['label' => 'Contact name']));
+        $form->add(new Text('contact_email', ['label' => 'Company email']));
         $form->add(new Submit('submit', ['label' => 'Save']));
 
         /** @var Request $request */

@@ -3,11 +3,16 @@
 namespace ConferenceTools\Sponsorship\Domain\ValueObject;
 
 use JMS\Serializer\Annotation as JMS;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Embeddable()
+ */
 class Contact
 {
     /**
      * @JMS\Type("string")
+     * @ORM\Column(type="string")
      * @var string
      */
     private $name;
@@ -15,6 +20,7 @@ class Contact
     /**
      * @var string
      * @JMS\Type("string")
+     * @ORM\Column(type="string")
      */
     private $email;
 
