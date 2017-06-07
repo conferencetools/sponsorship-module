@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Process;
 
+use Carnage\Cqrs\Testing\AbstractBusTest;
 use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateReply;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse;
@@ -12,7 +13,6 @@ use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout;
 use ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation as ConversationProcessManager;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
-use ConferenceTools\Sponsorship\Testing\AbstractBusTest;
 
 class ConversationTest extends AbstractBusTest
 {

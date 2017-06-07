@@ -2,8 +2,8 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Model;
 
+use Carnage\Cqrs\Testing\AbstractBusTest;
 use ConferenceTools\Sponsorship\Domain\Event\AlarmClock\MessageScheduled;
-use ConferenceTools\Sponsorship\Testing\AbstractBusTest;
 use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt;
 use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\WakeUp;
 use ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock as AlarmClockCommandHandler;

@@ -2,12 +2,12 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Model;
 
+use Carnage\Cqrs\Testing\AbstractBusTest;
 use ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead;
 use ConferenceTools\Sponsorship\Domain\CommandHandler\Lead as LeadCommandHandler;
 use ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired;
 use ConferenceTools\Sponsorship\Domain\Model\Lead\Lead;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
-use ConferenceTools\Sponsorship\Testing\AbstractBusTest;
 
 class LeadTest extends AbstractBusTest
 {

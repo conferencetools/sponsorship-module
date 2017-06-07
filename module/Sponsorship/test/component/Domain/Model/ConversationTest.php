@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Model;
 
+use Carnage\Cqrs\Testing\AbstractBusTest;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateReply;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
@@ -16,7 +17,6 @@ use ConferenceTools\Sponsorship\Domain\Model\Conversation\Conversation;
 use ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation as ConversationCommandHandler;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
-use ConferenceTools\Sponsorship\Testing\AbstractBusTest;
 
 class ConversationTest extends AbstractBusTest
 {

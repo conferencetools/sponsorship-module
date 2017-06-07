@@ -4,8 +4,8 @@
   "license": "MIT",
   "require": {
     "php": ">=7.0.5",
-    "carnage/cqrs": "dev-master as 0.1.986",
-    "carnage/cqorms": "~0.1.0",
+    "carnage/cqrs": "dev-master as 0.2.0",
+    "carnage/cqorms": "dev-master as 0.2.0",
     "doctrine/doctrine-orm-module": "^1.0.0",
     "doctrine/common": "^2.6.0",
     "neilime/zf2-twb-bundle": "2.*@stable",
