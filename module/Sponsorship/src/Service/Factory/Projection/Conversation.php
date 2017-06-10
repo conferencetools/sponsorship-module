@@ -2,9 +2,9 @@
 
 namespace ConferenceTools\Sponsorship\Service\Factory\Projection;
 
+use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 use ConferenceTools\Sponsorship\Domain\Projection\Conversation as ConversationProjection;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation as ConversationEntity;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;

@@ -2,12 +2,10 @@
 
 namespace ConferenceTools\Sponsorship\Controller;
 
+use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
-use ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
-use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\Submit;

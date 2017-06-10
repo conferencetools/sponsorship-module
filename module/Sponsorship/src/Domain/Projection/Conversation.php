@@ -3,22 +3,19 @@
 namespace ConferenceTools\Sponsorship\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
+use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation as ConversationEntity;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Message;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\Common\Collections\Criteria;
 
 class Conversation extends AbstractMethodNameMessageHandler
 {
     private $repository;
 
-    /**
-     * @TODO replace with interface.
-     */
-    public function __construct(DoctrineRepository $repository)
+    public function __construct(RepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

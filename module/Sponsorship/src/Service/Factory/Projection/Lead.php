@@ -2,9 +2,9 @@
 
 namespace ConferenceTools\Sponsorship\Service\Factory\Projection;
 
+use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 use ConferenceTools\Sponsorship\Domain\Projection\Lead as LeadProjection;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Lead\Lead as LeadEntity;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;

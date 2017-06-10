@@ -3,10 +3,10 @@
 namespace ConferenceTools\Sponsorship\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
+use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Lead\Lead as LeadEntity;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\Common\Collections\Criteria;
 
 class Lead extends AbstractMethodNameMessageHandler
@@ -16,7 +16,7 @@ class Lead extends AbstractMethodNameMessageHandler
     /**
      * @TODO replace with interface.
      */
-    public function __construct(DoctrineRepository $repository)
+    public function __construct(RepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

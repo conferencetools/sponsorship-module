@@ -3,11 +3,11 @@
 namespace ConferenceTools\Sponsorship\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
+use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use ConferenceTools\Sponsorship\Service\Mailgun\Client;
 use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Console\Command\Command;
@@ -22,7 +22,7 @@ class RetrieveEvents extends Command
     private $commandBus;
 
     /**
-     * @var DoctrineRepository
+     * @var RepositoryInterface
      */
     private $conversationRepository;
 
@@ -33,7 +33,7 @@ class RetrieveEvents extends Command
 
     public static function build(
         MessageBusInterface $commandBus,
-        DoctrineRepository $conversationRepository,
+        RepositoryInterface $conversationRepository,
         Client $mailgun
     ) {
         $instance = new static();

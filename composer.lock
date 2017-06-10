@@ -12,16 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/carnage/cqorms.git",
-                "reference": "9f9df0e4d55a89606968056dd25a20fc5dfd273a"
+                "reference": "5e1708324c12a3f4b85e185eb64878062270d9db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/cqorms/zipball/9f9df0e4d55a89606968056dd25a20fc5dfd273a",
-                "reference": "9f9df0e4d55a89606968056dd25a20fc5dfd273a",
+                "url": "https://api.github.com/repos/carnage/cqorms/zipball/5e1708324c12a3f4b85e185eb64878062270d9db",
+                "reference": "5e1708324c12a3f4b85e185eb64878062270d9db",
                 "shasum": ""
             },
             "require": {
-                "carnage/cqrs": "~0.2.0",
+                "carnage/cqrs": "dev-master",
                 "doctrine/doctrine-orm-module": "^1.0.0",
                 "jms/serializer": "^1.1.0",
                 "php": ">=7.0",
@@ -42,7 +42,7 @@
                 "MIT"
             ],
             "description": "Doctrine ORM implementation of persistence for cqrs module",
-            "time": "2017-06-03 11:27:43"
+            "time": "2017-06-10 17:03:43"
         },
         {
             "name": "carnage/cqrs",
@@ -50,16 +50,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/carnage/cqrs.git",
-                "reference": "daef60518ee00324acd5afa6555eb03f8275146b"
+                "reference": "9c3aef11d693252dd359bad1121fa10c507fa561"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/cqrs/zipball/daef60518ee00324acd5afa6555eb03f8275146b",
-                "reference": "daef60518ee00324acd5afa6555eb03f8275146b",
+                "url": "https://api.github.com/repos/carnage/cqrs/zipball/9c3aef11d693252dd359bad1121fa10c507fa561",
+                "reference": "9c3aef11d693252dd359bad1121fa10c507fa561",
                 "shasum": ""
             },
             "require": {
                 "carnage/zendfony-cli": "~0.1.0",
+                "doctrine/collections": "^1.0",
                 "doctrine/dbal": "^2.5.1",
                 "ircmaxell/random-lib": "^1.0.0",
                 "php": ">=5.6",
@@ -88,7 +89,7 @@
                 "MIT"
             ],
             "description": "Cqrs/Es module for zf2",
-            "time": "2017-06-07 08:18:22"
+            "time": "2017-06-10 16:41:41"
         },
         {
             "name": "carnage/zendfony-cli",
@@ -1790,16 +1791,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
                 "shasum": ""
             },
             "require": {
@@ -1811,7 +1812,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -1845,7 +1846,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "symfony/process",
@@ -2819,41 +2820,43 @@
         },
         {
             "name": "zendframework/zend-mail",
-            "version": "2.7.3",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mail.git",
-                "reference": "e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff"
+                "reference": "248230940ab1453b2a532a8fde76c5a6470d7aad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-mail/zipball/e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff",
-                "reference": "e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff",
+                "url": "https://api.github.com/repos/zendframework/zend-mail/zipball/248230940ab1453b2a532a8fde76c5a6470d7aad",
+                "reference": "248230940ab1453b2a532a8fde76c5a6470d7aad",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0",
+                "ext-iconv": "*",
+                "php": "^7.0 || ^5.6",
                 "zendframework/zend-loader": "^2.5",
                 "zendframework/zend-mime": "^2.5",
                 "zendframework/zend-stdlib": "^2.7 || ^3.0",
                 "zendframework/zend-validator": "^2.6"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8",
+                "phpunit/phpunit": "^6.0.8 || ^5.7.15",
                 "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-config": "^2.6",
                 "zendframework/zend-crypt": "^2.6",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
             },
             "suggest": {
+                "ext-intl": "Handle IDN in AddressList hostnames",
                 "zendframework/zend-crypt": "Crammd5 support in SMTP Auth",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3 when using SMTP to deliver messages"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev",
-                    "dev-develop": "2.8-dev"
+                    "dev-master": "2.8-dev",
+                    "dev-develop": "2.9-dev"
                 },
                 "zf": {
                     "component": "Zend\\Mail",
@@ -2875,7 +2878,7 @@
                 "mail",
                 "zf2"
             ],
-            "time": "2017-02-14T18:03:34+00:00"
+            "time": "2017-06-08T20:03:58+00:00"
         },
         {
             "name": "zendframework/zend-mime",

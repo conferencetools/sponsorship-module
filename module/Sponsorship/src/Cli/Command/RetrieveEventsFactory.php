@@ -2,9 +2,9 @@
 
 namespace ConferenceTools\Sponsorship\Cli\Command;
 
+use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 use Carnage\Cqrs\Command\CommandBusInterface;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use ConferenceTools\Sponsorship\Service\Mailgun\Client;
 use Doctrine\ORM\EntityManager;
 use Zend\ServiceManager\FactoryInterface;

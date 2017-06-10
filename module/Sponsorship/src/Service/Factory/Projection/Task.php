@@ -2,9 +2,9 @@
 
 namespace ConferenceTools\Sponsorship\Service\Factory\Projection;
 
+use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 use ConferenceTools\Sponsorship\Domain\Projection\Task as TaskProjection;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Task\Task as TaskEntity;
-use ConferenceTools\Sponsorship\Infra\ReadRepo\DoctrineRepository;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\FactoryInterface;
