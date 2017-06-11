@@ -26,8 +26,6 @@ return [
     ],
     'command_handlers' => [
         'factories' => [
-            \ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock::class =>
-                \ConferenceTools\Sponsorship\Service\Factory\CommandHandler\AlarmClock::class,
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\CommandHandler\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class =>
@@ -57,11 +55,6 @@ return [
         ],
     ],
     'command_subscriptions' => [
-        \ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt::class =>
-            \ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock::class,
-        \ConferenceTools\Sponsorship\Domain\Command\AlarmClock\WakeUp::class =>
-            \ConferenceTools\Sponsorship\Domain\CommandHandler\AlarmClock::class,
-
         \ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateReply::class =>
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
         \ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse::class =>

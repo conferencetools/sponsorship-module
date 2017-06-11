@@ -5,7 +5,7 @@ namespace ConferenceTools\Sponsorship\Domain\Process;
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
 use Carnage\Cqrs\Command\CommandInterface;
 use Carnage\Cqrs\Process\NewProcessInterface;
-use ConferenceTools\Sponsorship\Domain\Command\AlarmClock\SendAt;
+use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendAt;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateReply;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
@@ -90,7 +90,7 @@ class Conversation extends AbstractAggregate implements NewProcessInterface
     }
 
     /**
-     * @return SendAt
+     * @return \ConferenceTools\Sponsorship\Domain\Command\Conversation\SendAt
      */
     private function createReplyTimeoutCommand(): SendAt
     {

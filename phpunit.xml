@@ -1,18 +1,18 @@
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="Sponsorship domain unit tests">
-            <directory>module/Sponsorship/test/unit/Domain</directory>
+            <directory>test/unit/Domain</directory>
         </testsuite>
         <testsuite name="Sponsorship domain component tests">
-            <directory>module/Sponsorship/test/component/Domain</directory>
+            <directory>test/component/Domain</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">module/Sponsorship/src/Domain</directory>
+            <directory suffix=".php">src/Domain</directory>
             <exclude>
-                <directory suffix=".php">module/Sponsorship/src/Domain/Command</directory>
-                <directory suffix=".php">module/Sponsorship/src/Domain/Event</directory>
+                <directory suffix=".php">src/Domain/Command</directory>
+                <directory suffix=".php">src/Domain/Event</directory>
             </exclude>
         </whitelist>
 

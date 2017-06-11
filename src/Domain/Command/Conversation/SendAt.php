@@ -1,12 +1,13 @@
 <?php
 
-namespace ConferenceTools\Sponsorship\Domain\Command\AlarmClock;
+namespace ConferenceTools\Sponsorship\Domain\Command\Conversation;
 
+use Carnage\Scheduler\Domain\Command\ScheduleMessage;
 use JMS\Serializer\Annotation as JMS;
 use Carnage\Cqrs\Command\CommandInterface;
 use Carnage\Cqrs\MessageBus\MessageInterface;
 
-class SendAt implements CommandInterface
+class SendAt implements CommandInterface, ScheduleMessage
 {
     /**
      * @JMS\Type("Object")
