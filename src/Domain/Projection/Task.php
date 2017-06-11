@@ -10,6 +10,7 @@ use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Task\Task as TaskEntity;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 
 class Task extends AbstractMethodNameMessageHandler
@@ -33,12 +34,21 @@ class Task extends AbstractMethodNameMessageHandler
 
     protected function handleMessageReceived(MessageReceived $event)
     {
-        //setup a task to reply to the message
-        $task = TaskEntity::replyToMessage($event->getId());
-        $this->repository->add($task);
-        //close any task for sending chase emails
-        $this->closeTasks($event->getId(), [TaskEntity::TYPE_SEND_FOLLOW_UP]);
-        $this->repository->commit();
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('conversationId', $event->getId()));
+        $criteria->andWhere(Criteria::expr()->in('taskType', TaskEntity::TYPE_REPLY_TO_MESSAGE));
+
+        /** @var Collection $tasks */
+        $tasks = $this->repository->matching($criteria);
+
+        if ($tasks->count() === 0) {
+            //setup a task to reply to the message
+            $task = TaskEntity::replyToMessage($event->getId());
+            $this->repository->add($task);
+            //close any task for sending chase emails
+            $this->closeTasks($event->getId(), [TaskEntity::TYPE_SEND_FOLLOW_UP]);
+            $this->repository->commit();
+        }
     }
 
     protected function handleMessageSent(MessageSent $event)
