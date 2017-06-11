@@ -28,12 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ConferenceTools\\Sponsorship\\": "module/Sponsorship/src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "ConferenceTools\\Sponsorship\\": "module/Sponsorship/test/unit"
+      "ConferenceTools\\Sponsorship\\": "src"
     }
   },
   "require-dev": {
