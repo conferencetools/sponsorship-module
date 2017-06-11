@@ -33,7 +33,17 @@ return [
                             ]
                         ],
                         'may_terminate' => true,
-                    ]
+                    ],
+                    'view' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => 'view/:leadId',
+                            'defaults' => [
+                                'action' => 'viewLead'
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                 ]
             ],
             'conversation' => [

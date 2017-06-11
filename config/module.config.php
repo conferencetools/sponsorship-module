@@ -130,6 +130,7 @@ return [
             'error/index' => __DIR__ . '/../view/error/index.phtml',
             'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml',
             'sponsorship/lead/new-lead' => __DIR__ . '/../view/sponsorship/lead/new-lead.phtml',
+            'sponsorship/lead/view-lead' => __DIR__ . '/../view/sponsorship/lead/view-lead.phtml',
             'sponsorship/lead/index' => __DIR__ . '/../view/sponsorship/lead/index.phtml',
             'sponsorship/conversation/reply' => __DIR__ . '/../view/sponsorship/conversation/reply.phtml',
         ],

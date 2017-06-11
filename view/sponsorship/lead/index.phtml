@@ -5,6 +5,7 @@
     <tr>
         <th>Company name</th>
         <th>Contact</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -12,6 +13,7 @@
     <tr>
         <td><?=$lead->getCompanyName()?></td>
         <td><?=$lead->getContact()->getName()?></td>
+        <td><a href="<?=$this->url('root/lead/view', ['leadId' => $lead->getLeadId()])?>">Details</a></td>
     </tr>
 <?php endforeach?>
 </tbody>

@@ -24,6 +24,19 @@ class LeadController extends AbstractController
         return new ViewModel(['leads' => $leads]);
     }
 
+    public function viewLeadAction()
+    {
+        $leadId = $this->params()->fromRoute('leadId');
+
+        $em = $this->getServiceLocator()->get(EntityManager::class);
+        $repo = new DoctrineRepository(Lead::class, $em);
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('leadId', $leadId));
+        $leads = $repo->matching($criteria);
+
+        return new ViewModel(['lead' => $leads->first()]);
+    }
+
     public function newLeadAction()
     {
         $form = new Form();

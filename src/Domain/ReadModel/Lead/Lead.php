@@ -41,7 +41,7 @@ class Lead
 
     /**
      * @var string[]
-     * @ORM\Column("json")
+     * @ORM\Column(type="json_array")
      */
     private $conversations = [];
 
