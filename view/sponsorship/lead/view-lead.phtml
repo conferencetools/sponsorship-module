@@ -1,14 +1,14 @@
 <div class="list-group col-md-6">
     <div href="#" class="list-group-item">
         <h4 class="list-group-item-heading">Company Name</h4>
-        <p class="list-group-item-text"><?=$this->lead->getCompanyName()?></p>
+        <p class="list-group-item-text"><?=$this->escapeHtml($this->lead->getCompanyName())?></p>
     </div>
 </div>
 
 <div class="list-group col-md-6">
     <div href="#" class="list-group-item">
         <h4 class="list-group-item-heading">Contact Name</h4>
-        <p class="list-group-item-text"><?=$this->lead->getContact()->getName()?></p>
+        <p class="list-group-item-text"><?=$this->escapeHtml($this->lead->getContact()->getName())?></p>
     </div>
 </div>
 

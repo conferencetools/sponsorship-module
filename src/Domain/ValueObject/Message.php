@@ -55,4 +55,12 @@ class Message
     {
         return $this->body;
     }
+
+    /**
+     * @return array
+     */
+    public function getAttachments(): array
+    {
+        return $this->attachments ?? [];
+    }
 }

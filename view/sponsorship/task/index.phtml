@@ -9,7 +9,7 @@
     <tbody>
     <?php foreach ($this->tasks as $task):?>
         <tr>
-            <td><?=$task->getDescription()?></td>
+            <td><?=$this->escapeHtml($task->getDescription())?></td>
             <td>
                 <a href="<?=$this->url('root/conversation/reply', ['conversationId' => $task->getConversationId()])?>">
                     Reply

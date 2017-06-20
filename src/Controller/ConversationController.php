@@ -56,6 +56,7 @@ class ConversationController extends AbstractController
                 $data = $form->getData();
                 $files = [];
                 if (isset($data['attachment']['tmp_name'])) {
+                    //@TODO use identity generator here to ensure a better filename
                     $destination = 'files/' . uniqid();
                     $this->filesystem->writeStream($destination, fopen($data['attachment']['tmp_name'], 'r+'));
                     $files[] = new FileObject($data['attachment']['name'], $destination);

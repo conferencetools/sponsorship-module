@@ -42,9 +42,17 @@
             </span>
             <div class="chat-body clearfix">
                 <div class="header">
-                    <strong class="primary-font"><?=$message->getMessage()->getSubject()?></strong>
+                    <strong class="primary-font"><?=$this->escapeHtml($message->getMessage()->getSubject())?></strong>
                 </div>
-                <p><?=$message->getMessage()->getBody()?></p>
+                <p><?=$this->escapeHtml($message->getMessage()->getBody())?></p>
+                <?php $attachments = $message->getMessage()->getAttachments();?>
+                <?php if (count($attachments) > 0):?>
+                    <hr />
+                    <?php foreach ($attachments as $file):?>
+                        <?php /** @var \ConferenceTools\Sponsorship\Domain\ValueObject\File $file */?>
+                        <p><?=$this->escapeHtml($file->getFilename())?></p>
+                    <?php endforeach;?>
+                <?php endif?>
             </div>
         </li>
     <?php endforeach;?>
