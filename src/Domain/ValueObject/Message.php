@@ -26,10 +26,18 @@ class Message
      */
     private $body;
 
-    public function __construct(string $subject, string $body)
+    /**
+     * @ORM\Column(type="json_object", nullable=true)
+     * @JMS\Type("ConferenceTools\Sponsorship\Domain\ValueObject\File")
+     * @var File[]
+     */
+    private $attachments;
+
+    public function __construct(string $subject, string $body, File ...$attachments)
     {
         $this->subject = $subject;
         $this->body = $body;
+        $this->attachments = empty($attachments) ? null : $attachments;
     }
 
     /**

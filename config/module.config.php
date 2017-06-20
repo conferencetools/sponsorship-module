@@ -109,7 +109,7 @@ return [
             \ConferenceTools\Sponsorship\Controller\LeadController::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
             \ConferenceTools\Sponsorship\Controller\ConversationController::class =>
-                \ConferenceTools\Sponsorship\Service\Factory\ControllerFactory::class,
+                \ConferenceTools\Sponsorship\Controller\ConversationControllerFactory::class,
         ],
     ],
     'view_helpers' => [
