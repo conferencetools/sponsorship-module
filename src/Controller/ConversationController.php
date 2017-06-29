@@ -6,6 +6,8 @@ use BsbFlysystem\Service\FilesystemManager;
 use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
+use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
 use ConferenceTools\Sponsorship\Domain\ValueObject\File as FileObject;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
@@ -37,14 +39,24 @@ class ConversationController extends AbstractController
         $this->filesystem = $filesystem;
     }
 
+    public function startAction()
+    {
+        $leadId = $this->params()->fromRoute('leadId');
+
+        $command = new StartWithLead($leadId);
+
+        $this->getCommandBus()->dispatch($command);
+
+        /** @var StartedWithLead $event */
+        $event = current($this->events()->getEventsByType(StartedWithLead::class));
+        $conversationId = $event->getId();
+
+        return $this->redirect()->toRoute('root/conversation/reply', ['conversationId' => $conversationId]);
+    }
 
     public function replyAction()
     {
-        $form = new Form();
-        $form->add(new Text('subject', ['label' => 'Subject']));
-        $form->add(new Textarea('body', ['label' => 'Body']));
-        $form->add(new File('attachment', ['label' => 'Attachment']));
-        $form->add(new Submit('submit', ['label' => 'Send']));
+        $form = $this->createMessageForm();
 
         $conversationId = $this->params()->fromRoute('conversationId');
 
@@ -54,13 +66,7 @@ class ConversationController extends AbstractController
             $form->setData(ArrayUtils::merge($request->getPost()->toArray(), $request->getFiles()->toArray()));
             if ($form->isValid()) {
                 $data = $form->getData();
-                $files = [];
-                if (isset($data['attachment']['tmp_name'])) {
-                    //@TODO use identity generator here to ensure a better filename
-                    $destination = 'files/' . uniqid();
-                    $this->filesystem->writeStream($destination, fopen($data['attachment']['tmp_name'], 'r+'));
-                    $files[] = new FileObject($data['attachment']['name'], $destination);
-                }
+                $files = $this->handleFiles($data);
 
                 $message = new Message($data['subject'], $data['body'], ...$files);
                 $command = new SendMessage($conversationId, $message);
@@ -77,5 +83,36 @@ class ConversationController extends AbstractController
         $conversation = $repo->matching($search)->first();
 
         return new ViewModel(['form' => $form, 'conversation' => $conversation]);
+    }
+
+    /**
+     * @return Form
+     */
+    private function createMessageForm(): Form
+    {
+        $form = new Form();
+        $form->add(new Text('subject', ['label' => 'Subject']));
+        $form->add(new Textarea('body', ['label' => 'Body']));
+        $form->add(new File('attachment', ['label' => 'Attachment']));
+        $form->add(new Submit('submit', ['label' => 'Send']));
+        return $form;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    private function handleFiles($data): array
+    {
+        $files = [];
+
+        if (isset($data['attachment']['tmp_name']) && is_file($data['attachment']['tmp_name'])) {
+            //@TODO use identity generator here to ensure a better filename
+            $destination = 'files/' . uniqid();
+            $this->filesystem->writeStream($destination, fopen($data['attachment']['tmp_name'], 'r+'));
+            $files[] = new FileObject($data['attachment']['name'], $destination);
+        }
+
+        return $files;
     }
 }

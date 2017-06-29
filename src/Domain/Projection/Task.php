@@ -9,6 +9,7 @@ use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
+use ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Task\Task as TaskEntity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -17,9 +18,6 @@ class Task extends AbstractMethodNameMessageHandler
 {
     private $repository;
 
-    /**
-     * @TODO replace with interface.
-     */
     public function __construct(RepositoryInterface $repository)
     {
         $this->repository = $repository;
@@ -27,7 +25,30 @@ class Task extends AbstractMethodNameMessageHandler
 
     protected function handleStartedWithLead(StartedWithLead $event)
     {
-        $task = TaskEntity::sendFirstEmail($event->getLeadId(), $event->getId());
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('leadId', $event->getLeadId()));
+        $criteria->andWhere(Criteria::expr()->in('taskType', [TaskEntity::TYPE_START_A_CONVERSATION]));
+
+        /** @var Collection $tasks */
+        $tasks = $this->repository->matching($criteria);
+
+        if ((int) $tasks->count() !== 0) {
+            $this->closeTasks(
+                $event->getLeadId(),
+                [
+                    TaskEntity::TYPE_START_A_CONVERSATION,
+                ]
+            );
+
+            $task = TaskEntity::sendFirstEmail($event->getLeadId(), $event->getId());
+            $this->repository->add($task);
+            $this->repository->commit();
+        }
+    }
+
+    protected function handleLeadAcquired(LeadAcquired $event)
+    {
+        $task = TaskEntity::startAConversation($event->getId());
         $this->repository->add($task);
         $this->repository->commit();
     }
@@ -87,10 +108,15 @@ class Task extends AbstractMethodNameMessageHandler
     /**
      * @param MessageSent $event
      */
-    protected function closeTasks(string $conversationId, array $taskTypes)
+    protected function closeTasks(string $identifiedBy, array $taskTypes)
     {
         $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('conversationId', $conversationId));
+        $criteria->where(
+            Criteria::expr()->orX(
+                Criteria::expr()->eq('conversationId', $identifiedBy),
+                Criteria::expr()->eq('leadId', $identifiedBy)
+            )
+        );
         $criteria->andWhere(Criteria::expr()->in('taskType', $taskTypes));
 
         $tasks = $this->repository->matching($criteria);

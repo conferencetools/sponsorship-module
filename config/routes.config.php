@@ -55,6 +55,16 @@ return [
                     ]
                 ],
                 'child_routes' => [
+                    'start' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => 'start/:leadId',
+                            'defaults' => [
+                                'action' => 'start'
+                            ]
+                        ],
+                        'may_terminate' => true,
+                    ],
                     'reply' => [
                         'type' => \Zend\Mvc\Router\Http\Segment::class,
                         'options' => [

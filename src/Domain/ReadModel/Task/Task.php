@@ -12,6 +12,7 @@ class Task
     const TYPE_SENT_FIRST_EMAIL = 'send-first-email';
     const TYPE_REPLY_TO_MESSAGE = 'reply-to-message';
     const TYPE_SEND_FOLLOW_UP = 'send-follow-up';
+    const TYPE_START_A_CONVERSATION = 'start-a-conversation';
 
     /**
      * @var integer
@@ -47,6 +48,15 @@ class Task
 
     private function __construct()
     {
+    }
+
+    public static function startAConversation($leadId)
+    {
+        $instance = new self();
+        $instance->leadId = $leadId;
+        $instance->taskType = self::TYPE_START_A_CONVERSATION;
+
+        return $instance;
     }
 
     public static function sendFirstEmail($leadId, $conversationId)
@@ -93,13 +103,16 @@ class Task
 
             case self::TYPE_SEND_FOLLOW_UP:
                 return 'No response yet, follow up';
+
+            case self::TYPE_START_A_CONVERSATION:
+                return 'Start a conversation';
         }
     }
 
     /**
      * @return string
      */
-    public function getConversationId(): string
+    public function getConversationId(): ?string
     {
         return $this->conversationId;
     }
@@ -107,7 +120,7 @@ class Task
     /**
      * @return string
      */
-    public function getLeadId(): string
+    public function getLeadId(): ?string
     {
         return $this->leadId;
     }

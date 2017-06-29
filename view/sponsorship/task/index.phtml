@@ -1,3 +1,14 @@
+<?php
+use ConferenceTools\Sponsorship\Domain\ReadModel\Task\Task;
+
+$taskTypeUrls = [
+    Task::TYPE_START_A_CONVERSATION => 'root/conversation/start',
+    Task::TYPE_SENT_FIRST_EMAIL => 'root/conversation/reply',
+    Task::TYPE_REPLY_TO_MESSAGE => 'root/conversation/reply',
+    Task::TYPE_SEND_FOLLOW_UP => 'root/conversation/reply',
+];
+?>
+
 <table class="table table-striped table-hover">
 
     <thead>
@@ -8,10 +19,17 @@
     </thead>
     <tbody>
     <?php foreach ($this->tasks as $task):?>
+        <?php
+            /** @var Task $task */
+            $urlParams = [
+                'conversationId' => $task->getConversationId(),
+                'leadId' => $task->getLeadId()
+            ];
+        ?>
         <tr>
             <td><?=$this->escapeHtml($task->getDescription())?></td>
             <td>
-                <a href="<?=$this->url('root/conversation/reply', ['conversationId' => $task->getConversationId()])?>">
+                <a href="<?=$this->url($taskTypeUrls[$task->getTaskType()], $urlParams)?>">
                     Reply
                 </a>
             </td>

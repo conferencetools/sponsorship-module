@@ -40,8 +40,6 @@ return [
     ],
     'event_listeners' => [
         'factories' => [
-            \ConferenceTools\Sponsorship\Domain\EventListener\StartConversation::class =>
-                \ConferenceTools\Sponsorship\Service\Factory\EventListener\StartConversation::class
         ],
     ],
     'projections' => [
@@ -93,13 +91,13 @@ return [
             \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
-            \ConferenceTools\Sponsorship\Domain\EventListener\StartConversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
         ],
     ],
     'controllers' => [
