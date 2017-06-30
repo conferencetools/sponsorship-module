@@ -11,7 +11,9 @@ return [
     'service_manager' => [
         'factories' => [
             \ConferenceTools\Sponsorship\Service\Mailgun\Client::class =>
-                \ConferenceTools\Sponsorship\Service\Mailgun\ClientFactory::class
+                \ConferenceTools\Sponsorship\Service\Mailgun\ClientFactory::class,
+            \ConferenceTools\Sponsorship\Domain\Service\IncomingMessageHandler::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\Service\IncomingMessageHandler::class
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class,

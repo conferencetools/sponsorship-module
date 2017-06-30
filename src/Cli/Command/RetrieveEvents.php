@@ -6,6 +6,7 @@ use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
+use ConferenceTools\Sponsorship\Domain\Service\IncomingMessageHandler;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
 use ConferenceTools\Sponsorship\Service\Mailgun\Client;
@@ -17,28 +18,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RetrieveEvents extends Command
 {
     /**
-     * @var MessageBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var RepositoryInterface
-     */
-    private $conversationRepository;
-
-    /**
      * @var Client
      */
     private $mailgun;
 
+    /**
+     * @var IncomingMessageHandler
+     */
+    private $messageHandler;
+
     public static function build(
-        MessageBusInterface $commandBus,
-        RepositoryInterface $conversationRepository,
+        IncomingMessageHandler $messageHandler,
         Client $mailgun
     ) {
         $instance = new static();
-        $instance->commandBus = $commandBus;
-        $instance->conversationRepository = $conversationRepository;
+        $instance->messageHandler = $messageHandler;
         $instance->mailgun = $mailgun;
 
         return $instance;
@@ -57,25 +51,9 @@ class RetrieveEvents extends Command
         foreach ($messages as $emailPayload) {
             //@TODO the whole of this probably needs moving into either a process manager or a domain service
             $message = new Message($emailPayload['subject'], $emailPayload['stripped-text']);
-
-            //@TODO add criteria to serach by email address of sender
-            $search = Criteria::create();
-            $results = $this->conversationRepository->matching($search);
-
-            if ($results->isEmpty()) {
-                //@TODO handle case where we don't have a lead matching this email eg create a new lead
-            } else {
-                /** @var Conversation $conversation */
-                $conversation = $results->first();
-                $command = new RecordMessage(
-                    $conversation->getConversationId(),
-                    //@TODO either grab contact from conversation or build from message
-                    new Contact('unknown', 'unknown@unknown.com'),
-                    $message
-                );
-
-                $this->commandBus->dispatch($command);
-            }
+            //@TODO either grab contact from conversation or build from message
+            $from = new Contact('unknown', 'unknown@unknown.com');
+            $this->messageHandler->handleIncomingMessage($message, $from);
         }
     }
 }
