@@ -2,7 +2,7 @@
 use ConferenceTools\Sponsorship\Controller;
 
 return [
-    'root' => [
+    'sponsorship' => [
         'type' => 'Segment',
         'options' => [
             'route' => '/',

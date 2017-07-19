@@ -3,14 +3,14 @@
 return [
     [
        'label' => 'Home',
-       'route' => 'root'
+       'route' => 'sponsorship'
     ],
     [
         'label' => 'New Lead',
-        'route' => 'root/lead/new'
+        'route' => 'sponsorship/lead/new'
     ],
     [
         'label' => 'View Leads',
-        'route' => 'root/lead'
+        'route' => 'sponsorship/lead'
     ],
 ];

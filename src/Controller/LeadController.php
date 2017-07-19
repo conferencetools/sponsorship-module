@@ -55,7 +55,7 @@ class LeadController extends AbstractController
                 $command = new AcquireLead($data['company_name'], $contact);
 
                 $this->getCommandBus()->dispatch($command);
-                $this->redirect()->toRoute('root');
+                $this->redirect()->toRoute('sponsorship');
             }
         }
 

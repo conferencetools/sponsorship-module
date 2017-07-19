@@ -51,7 +51,7 @@ class ConversationController extends AbstractController
         $event = current($this->events()->getEventsByType(StartedWithLead::class));
         $conversationId = $event->getId();
 
-        return $this->redirect()->toRoute('root/conversation/reply', ['conversationId' => $conversationId]);
+        return $this->redirect()->toRoute('sponsorship/conversation/reply', ['conversationId' => $conversationId]);
     }
 
     public function replyAction()
@@ -72,7 +72,7 @@ class ConversationController extends AbstractController
                 $command = new SendMessage($conversationId, $message);
 
                 $this->getCommandBus()->dispatch($command);
-                $this->redirect()->toRoute('root');
+                $this->redirect()->toRoute('sponsorship');
             }
         }
 
