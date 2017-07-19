@@ -2,7 +2,7 @@
 
 namespace ConferenceTools\Sponsorship\Domain\Service;
 
-use Carnage\Cqrs\Command\CommandBusInterface;
+use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation;
@@ -25,7 +25,7 @@ final class IncomingMessageHandler
      * IncomingMessageHandler constructor.
      * @param $commandBus
      */
-    public function __construct(CommandBusInterface $commandBus, RepositoryInterface $conversationRepository)
+    public function __construct(MessageBusInterface $commandBus, RepositoryInterface $conversationRepository)
     {
         $this->commandBus = $commandBus;
         $this->conversationRepository = $conversationRepository;
