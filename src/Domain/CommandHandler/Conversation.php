@@ -10,6 +10,7 @@ use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead;
+use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithMessage;
 use ConferenceTools\Sponsorship\Domain\Model\Conversation\Conversation as ConversationAggregate;
 
 class Conversation extends AbstractMethodNameMessageHandler
@@ -28,6 +29,17 @@ class Conversation extends AbstractMethodNameMessageHandler
         $conversation = ConversationAggregate::fromNewLead(
             $this->identityGenerator->generateIdentity(),
             $command->getLeadId()
+        );
+
+        $this->conversationRepository->save($conversation);
+    }
+
+    protected function handleStartWithMessage(StartWithMessage $command)
+    {
+        $conversation = ConversationAggregate::fromNewMessage(
+            $this->identityGenerator->generateIdentity(),
+            $command->getFrom(),
+            $command->getMessage()
         );
 
         $this->conversationRepository->save($conversation);

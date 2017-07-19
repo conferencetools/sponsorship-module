@@ -65,6 +65,8 @@ return [
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
         \ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead::class =>
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithMessage::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
 
         \ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead::class =>
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class,
@@ -91,6 +93,9 @@ return [
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout::class => [
             \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
+        ],
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\Started::class => [
+            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,

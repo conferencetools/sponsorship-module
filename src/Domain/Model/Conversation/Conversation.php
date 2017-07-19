@@ -8,6 +8,7 @@ use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\Started;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message;
@@ -25,6 +26,21 @@ class Conversation extends AbstractAggregate
     public function getId()
     {
         return $this->id;
+    }
+
+    public static function fromNewMessage($id, Contact $from, Message $message)
+    {
+        $event = new Started($id);
+        $instance = new self();
+        $instance->apply($event);
+        $instance->messageReceived($from, $message);
+
+        return $instance;
+    }
+
+    protected function applyStarted(Started $event)
+    {
+        $this->id = $event->getId();
     }
 
     public static function fromNewLead($id, $leadId)

@@ -6,6 +6,7 @@ use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\Started;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Conversation as ConversationEntity;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Conversation\Message;
@@ -21,6 +22,13 @@ class Conversation extends AbstractMethodNameMessageHandler
     }
 
     protected function handleStartedWithLead(StartedWithLead $event)
+    {
+        $entity = new ConversationEntity($event->getId());
+        $this->repository->add($entity);
+        $this->repository->commit();
+    }
+
+    protected function handleStarted(Started $event)
     {
         $entity = new ConversationEntity($event->getId());
         $this->repository->add($entity);
