@@ -57,7 +57,7 @@ class Task extends AbstractMethodNameMessageHandler
     {
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->eq('conversationId', $event->getId()));
-        $criteria->andWhere(Criteria::expr()->in('taskType', TaskEntity::TYPE_REPLY_TO_MESSAGE));
+        $criteria->andWhere(Criteria::expr()->in('taskType', [TaskEntity::TYPE_REPLY_TO_MESSAGE]));
 
         /** @var Collection $tasks */
         $tasks = $this->repository->matching($criteria);
