@@ -4,6 +4,7 @@ namespace ConferenceTools\Sponsorship\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
@@ -24,6 +25,13 @@ class Mapper extends AbstractMethodNameMessageHandler
     }
 
     protected function handleStartedWithLead(StartedWithLead $event)
+    {
+        $map = Mapping::ConversationToLead($event->getId(), $event->getLeadId());
+        $this->repository->add($map);
+        $this->repository->commit();
+    }
+
+    protected function handleAssignedToLead(AssignedToLead $event)
     {
         $map = Mapping::ConversationToLead($event->getId(), $event->getLeadId());
         $this->repository->add($map);

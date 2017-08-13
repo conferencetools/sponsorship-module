@@ -4,6 +4,7 @@ namespace ConferenceTools\Sponsorship\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\Started;
@@ -33,6 +34,14 @@ class Conversation extends AbstractMethodNameMessageHandler
     {
         $entity = new ConversationEntity($event->getId());
         $this->repository->add($entity);
+        $this->repository->commit();
+    }
+
+    protected function handleAssignedToLead(AssignedToLead $event)
+    {
+        $lead = $this->loadConversation($event->getId());
+        $lead->forLead($event->getLeadId());
+
         $this->repository->commit();
     }
 

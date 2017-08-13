@@ -116,7 +116,9 @@ return [
         ],
 
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead::class => [
-
+            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
         ],
     ],
     'controllers' => [

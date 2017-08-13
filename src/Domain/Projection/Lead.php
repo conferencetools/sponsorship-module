@@ -4,6 +4,7 @@ namespace ConferenceTools\Sponsorship\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead;
 use ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired;
 use ConferenceTools\Sponsorship\Domain\ReadModel\Lead\Lead as LeadEntity;
@@ -29,6 +30,14 @@ class Lead extends AbstractMethodNameMessageHandler
     }
 
     protected function handleStartedWithLead(StartedWithLead $event)
+    {
+        $lead = $this->loadLead($event->getLeadId());
+        $lead->addConversation($event->getId());
+
+        $this->repository->commit();
+    }
+
+    protected function handleAssignedToLead(AssignedToLead $event)
     {
         $lead = $this->loadLead($event->getLeadId());
         $lead->addConversation($event->getId());
