@@ -12,12 +12,12 @@
     <?php foreach ($this->leads as $lead):?>
     <tr>
         <td>
-            <a href="<?=$this->url('root/lead/view', ['leadId' => $lead->getLeadId()])?>">
+            <a href="<?=$this->url('sponsorship/lead/view', ['leadId' => $lead->getLeadId()])?>">
                 <?=$this->escapeHtml($lead->getCompanyName())?>
             </a>
         </td>
         <td><?=$this->escapeHtml($lead->getContact()->getName())?></td>
-        <td><a href="<?=$this->url('root/lead/view', ['leadId' => $lead->getLeadId()])?>">Details</a></td>
+        <td><a href="<?=$this->url('sponsorship/lead/view', ['leadId' => $lead->getLeadId()])?>">Details</a></td>
     </tr>
 <?php endforeach?>
 </tbody>

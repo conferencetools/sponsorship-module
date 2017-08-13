@@ -1,4 +1,4 @@
-<?php $startUrl = $this->url('root/conversation/start', ['leadId' => $this->lead->getLeadId()]) ?>
+<?php $startUrl = $this->url('sponsorship/conversation/start', ['leadId' => $this->lead->getLeadId()]) ?>
 <div class="list-group col-md-6">
     <div href="#" class="list-group-item">
         <h4 class="list-group-item-heading">Company Name</h4>
@@ -27,7 +27,7 @@
     <?php foreach ($this->lead->getConversations() as $conversation):?>
         <tr>
             <td><?=$i?></td>
-            <td><a href="<?=$this->url('root/conversation/reply', ['conversationId' => $conversation])?>">View</a></td>
+            <td><a href="<?=$this->url('sponsorship/conversation/reply', ['conversationId' => $conversation])?>">View</a></td>
         </tr>
         <?php $i++;?>
     <?php endforeach?>
