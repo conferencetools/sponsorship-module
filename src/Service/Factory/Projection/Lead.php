@@ -14,7 +14,7 @@ class Lead implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), Task::class);
+        return $this($serviceLocator->getServiceLocator(), LeadProjection::class);
     }
 
     public function __invoke(ContainerInterface $container, $name, $options = [])

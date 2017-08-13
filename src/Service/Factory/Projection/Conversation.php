@@ -14,7 +14,7 @@ class Conversation implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), Task::class);
+        return $this($serviceLocator->getServiceLocator(), ConversationProjection::class);
     }
 
     public function __invoke(ContainerInterface $container, $name, $options = [])

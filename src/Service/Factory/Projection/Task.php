@@ -14,7 +14,7 @@ class Task implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($serviceLocator->getServiceLocator(), Task::class);
+        return $this($serviceLocator->getServiceLocator(), TaskProjection::class);
     }
 
     public function __invoke(ContainerInterface $container, $name, $options = [])
