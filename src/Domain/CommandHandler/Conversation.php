@@ -11,6 +11,7 @@ use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\SendMessage;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithLead;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithMessage;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead;
 use ConferenceTools\Sponsorship\Domain\Model\Conversation\Conversation as ConversationAggregate;
 
 class Conversation extends AbstractMethodNameMessageHandler
@@ -30,6 +31,14 @@ class Conversation extends AbstractMethodNameMessageHandler
             $this->identityGenerator->generateIdentity(),
             $command->getLeadId()
         );
+
+        $this->conversationRepository->save($conversation);
+    }
+
+    protected function handleAssignToLead(AssignedToLead $command)
+    {
+        $conversation = $this->loadConversation($command->getId());
+        $conversation->assignToLead($command->getLeadId());
 
         $this->conversationRepository->save($conversation);
     }

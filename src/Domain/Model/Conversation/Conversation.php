@@ -3,6 +3,7 @@
 namespace ConferenceTools\Sponsorship\Domain\Model\Conversation;
 
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
@@ -56,6 +57,17 @@ class Conversation extends AbstractAggregate
     protected function applyStartedWithLead(StartedWithLead $event)
     {
         $this->id = $event->getId();
+        $this->leadId = $event->getLeadId();
+    }
+
+    public function assignToLead($leadId)
+    {
+        $event = new AssignedToLead($this->id, $leadId);
+        $this->apply($event);
+    }
+
+    protected function applyAssignToLead(AssignedToLead $event)
+    {
         $this->leadId = $event->getLeadId();
     }
 

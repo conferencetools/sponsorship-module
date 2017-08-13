@@ -69,6 +69,8 @@ return [
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
         \ConferenceTools\Sponsorship\Domain\Command\Conversation\StartWithMessage::class =>
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
+        \ConferenceTools\Sponsorship\Domain\Command\Conversation\AssignToLead::class =>
+            \ConferenceTools\Sponsorship\Domain\CommandHandler\Conversation::class,
 
         \ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead::class =>
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class,
@@ -111,6 +113,10 @@ return [
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
+        ],
+
+        \ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead::class => [
+
         ],
     ],
     'controllers' => [
