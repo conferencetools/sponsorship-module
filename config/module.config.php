@@ -52,6 +52,8 @@ return [
                 \ConferenceTools\Sponsorship\Service\Factory\Projection\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class =>
                 \ConferenceTools\Sponsorship\Service\Factory\Projection\Lead::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class =>
+                \ConferenceTools\Sponsorship\Service\Factory\Projection\Mapper::class,
         ],
     ],
     'command_subscriptions' => [
@@ -76,11 +78,13 @@ return [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
             \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
@@ -101,10 +105,12 @@ return [
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
         ],
         \ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired::class => [
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
         ],
     ],
     'controllers' => [
