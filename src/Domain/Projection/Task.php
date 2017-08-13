@@ -62,7 +62,7 @@ class Task extends AbstractMethodNameMessageHandler
         /** @var Collection $tasks */
         $tasks = $this->repository->matching($criteria);
 
-        if ($tasks->count() === 0) {
+        if ((int) $tasks->count() === 0) {
             //setup a task to reply to the message
             $task = TaskEntity::replyToMessage($event->getId());
             $this->repository->add($task);
