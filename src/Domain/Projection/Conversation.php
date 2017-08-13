@@ -24,6 +24,7 @@ class Conversation extends AbstractMethodNameMessageHandler
     protected function handleStartedWithLead(StartedWithLead $event)
     {
         $entity = new ConversationEntity($event->getId());
+        $entity->forLead($event->getLeadId());
         $this->repository->add($entity);
         $this->repository->commit();
     }

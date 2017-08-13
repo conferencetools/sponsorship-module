@@ -37,10 +37,30 @@ class Conversation
      */
     private $messages;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $lead;
+
     public function __construct(string $conversationId)
     {
         $this->conversationId = $conversationId;
         $this->messages = new ArrayCollection();
+    }
+
+    public function forLead(string $lead)
+    {
+        $this->lead = $lead;
+    }
+
+    public function getLead(): string
+    {
+        return $this->lead;
+    }
+
+    public function hasLead(): bool
+    {
+        return !($this->lead === null);
     }
 
     public function addMessage(MessageValueObject $message, string $direction)
