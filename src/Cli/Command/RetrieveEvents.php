@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zend\Mail\AddressList;
 
 class RetrieveEvents extends Command
 {
@@ -49,10 +50,18 @@ class RetrieveEvents extends Command
         $messages = $this->mailgun->fetchEmailMessages();
 
         foreach ($messages as $emailPayload) {
-            //@TODO the whole of this probably needs moving into either a process manager or a domain service
+            //@TODO handle issues if there isn't a strippedtext field (use stripped html?)
+            //@TODO what if their contents differ?
             $message = new Message($emailPayload['subject'], $emailPayload['stripped-text']);
             //@TODO either grab contact from conversation or build from message
-            $from = new Contact('unknown', 'unknown@unknown.com');
+
+            $addressList = new AddressList();
+            //the from field seems to be the most reliable for determining the sender
+            //(consider forwarded messages) Return-Path is an alternative if there are issues around this
+            $addressList->addFromString($emailPayload['from']);
+            $emailFrom = $addressList->current();
+
+            $from = new Contact($emailFrom->getName(), $emailFrom->getEmail());
             $this->messageHandler->handleIncomingMessage($message, $from);
         }
     }
