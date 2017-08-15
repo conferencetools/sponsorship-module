@@ -4,6 +4,7 @@ namespace ConferenceTools\Sponsorship\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent;
 use ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding;
@@ -44,6 +45,17 @@ class Task extends AbstractMethodNameMessageHandler
             $this->repository->add($task);
             $this->repository->commit();
         }
+    }
+
+    protected function handleAssignedToLead(AssignedToLead $event)
+    {
+        $this->closeTasks(
+            $event->getLeadId(),
+            [
+                TaskEntity::TYPE_START_A_CONVERSATION,
+            ]
+        );
+        $this->repository->commit();
     }
 
     protected function handleLeadAcquired(LeadAcquired $event)

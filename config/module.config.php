@@ -119,6 +119,7 @@ return [
             \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
             \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
+            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
         ],
     ],
     'controllers' => [
@@ -144,7 +145,7 @@ return [
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => [
-            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'sponsorship/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
             'sponsorship/task/index' => __DIR__ . '/../view/sponsorship/task/index.phtml',
@@ -155,13 +156,6 @@ return [
         ],
         'controller_map' => [
             'ConferenceTools\Sponsorship\Controller' => 'sponsorship',
-        ],
-    ],
-    'zfc_rbac' => [
-        'guards' => [
-            'ZfcRbac\Guard\RouteGuard' => [
-                'admin/*' => ['admin'],
-            ],
         ],
     ],
     'doctrine' => [
