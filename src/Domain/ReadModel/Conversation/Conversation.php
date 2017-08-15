@@ -2,9 +2,11 @@
 
 namespace ConferenceTools\Sponsorship\Domain\ReadModel\Conversation;
 
+use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message as MessageValueObject;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,9 +65,9 @@ class Conversation
         return !($this->lead === null);
     }
 
-    public function addMessage(MessageValueObject $message, string $direction)
+    public function addMessage(MessageValueObject $message, string $direction, ?Contact $from = null)
     {
-        $this->messages->add(new Message($this, $message, $direction));
+        $this->messages->add(new Message($this, $message, $direction, $from));
     }
 
     /**
@@ -82,5 +84,20 @@ class Conversation
     public function getMessages(): Collection
     {
         return $this->messages;
+    }
+
+    /**
+     * @return Contact
+     */
+    public function getPrimaryContact()
+    {
+        $search = Criteria::create();
+        $search->where(Criteria::expr()->eq('direction', Message::DIRECTION_INBOUND));
+        $search->orderBy(['id' => Criteria::ASC]);
+        $search->setMaxResults(1);
+
+        $message = $this->messages->matching($search)->first();
+
+        return $message ? $message->getFrom() : null;
     }
 }

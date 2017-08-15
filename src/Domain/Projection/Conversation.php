@@ -48,7 +48,7 @@ class Conversation extends AbstractMethodNameMessageHandler
     protected function handleMessageReceived(MessageReceived $event)
     {
         $conversation = $this->loadConversation($event->getId());
-        $conversation->addMessage($event->getMessage(), Message::DIRECTION_INBOUND);
+        $conversation->addMessage($event->getMessage(), Message::DIRECTION_INBOUND, $event->getFrom());
         $this->repository->commit();
     }
 

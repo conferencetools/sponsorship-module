@@ -5,6 +5,7 @@ namespace ConferenceTools\Sponsorship\Domain\CommandHandler;
 use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\Repository\RepositoryInterface;
+use ConferenceTools\Sponsorship\Domain\Command\Conversation\AssignToLead;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateReply;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\EscalateResponse;
 use ConferenceTools\Sponsorship\Domain\Command\Conversation\RecordMessage;
@@ -35,9 +36,9 @@ class Conversation extends AbstractMethodNameMessageHandler
         $this->conversationRepository->save($conversation);
     }
 
-    protected function handleAssignToLead(AssignedToLead $command)
+    protected function handleAssignToLead(AssignToLead $command)
     {
-        $conversation = $this->loadConversation($command->getId());
+        $conversation = $this->loadConversation($command->getConversationId());
         $conversation->assignToLead($command->getLeadId());
 
         $this->conversationRepository->save($conversation);

@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Sponsorship\Domain\ReadModel\Conversation;
 
+use ConferenceTools\Sponsorship\Domain\ValueObject\Contact;
 use ConferenceTools\Sponsorship\Domain\ValueObject\Message as MessageValueObject;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,16 +41,23 @@ class Message
     private $direction;
 
     /**
+     * @var Contact|null
+     * @ORM\Column(type="json_object", nullable=true, name="fromx")
+     */
+    private $from;
+
+    /**
      * Message constructor.
      * @param Conversation $conversation
      * @param MessageValueObject $message
      * @param string $direction
      */
-    public function __construct(Conversation $conversation, MessageValueObject $message, string $direction)
+    public function __construct(Conversation $conversation, MessageValueObject $message, string $direction, ?Contact $from)
     {
         $this->conversation = $conversation;
         $this->message = $message;
         $this->direction = $direction;
+        $this->from = $from;
     }
 
     /**
@@ -66,5 +74,13 @@ class Message
     public function getDirection(): string
     {
         return $this->direction;
+    }
+
+    /**
+     * @return Contact|null
+     */
+    public function getFrom(): ?Contact
+    {
+        return $this->from;
     }
 }
