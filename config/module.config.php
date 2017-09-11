@@ -42,6 +42,8 @@ return [
     ],
     'event_listeners' => [
         'factories' => [
+            \ConferenceTools\Sponsorship\EventListener\SendMail::class =>
+                \ConferenceTools\Sponsorship\EventListener\SendMailFactory::class
         ],
     ],
     'projections' => [
@@ -75,53 +77,7 @@ return [
         \ConferenceTools\Sponsorship\Domain\Command\Lead\AcquireLead::class =>
             \ConferenceTools\Sponsorship\Domain\CommandHandler\Lead::class,
     ],
-    'domain_event_subscriptions' => [
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageReceived::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\MessageSent::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyOutstanding::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ReplyTimeout::class => [
-            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseOutstanding::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\ResponseTimeout::class => [
-            \ConferenceTools\Sponsorship\Domain\ProcessManager\Conversation::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\Started::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\StartedWithLead::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
-        ],
-        \ConferenceTools\Sponsorship\Domain\Event\Lead\LeadAcquired::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
-        ],
-
-        \ConferenceTools\Sponsorship\Domain\Event\Conversation\AssignedToLead::class => [
-            \ConferenceTools\Sponsorship\Domain\Projection\Mapper::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Lead::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Conversation::class,
-            \ConferenceTools\Sponsorship\Domain\Projection\Task::class,
-        ],
-    ],
+    'domain_event_subscriptions' => require __DIR__ . '/domain_event_subscriptions.config.php',
     'controllers' => [
         'factories' => [
             \ConferenceTools\Sponsorship\Controller\TaskController::class =>
@@ -145,6 +101,7 @@ return [
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => [
+            'email/outbound' => __DIR__ . '/../view/email/outbound.phtml',
             'sponsorship/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
