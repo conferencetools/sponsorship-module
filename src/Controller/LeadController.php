@@ -18,8 +18,7 @@ class LeadController extends AbstractController
 {
     public function indexAction()
     {
-        $em = $this->getServiceLocator()->get(EntityManager::class);
-        $repo = new DoctrineRepository(Lead::class, $em);
+        $repo = new DoctrineRepository(Lead::class, $this->getEntityManager());
         $leads = $repo->matching(Criteria::create());
         return new ViewModel(['leads' => $leads]);
     }
@@ -28,8 +27,7 @@ class LeadController extends AbstractController
     {
         $leadId = $this->params()->fromRoute('leadId');
 
-        $em = $this->getServiceLocator()->get(EntityManager::class);
-        $repo = new DoctrineRepository(Lead::class, $em);
+        $repo = new DoctrineRepository(Lead::class, $this->getEntityManager());
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->eq('leadId', $leadId));
         $leads = $repo->matching($criteria);

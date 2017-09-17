@@ -9,14 +9,20 @@ use ConferenceTools\Sponsorship\Domain\Service\IncomingMessageHandler as Incomin
 use Doctrine\ORM\EntityManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 
 class IncomingMessageHandler implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator, $name = null, $requestedName = null)
     {
-        $entityManager = $serviceLocator->get(EntityManager::class);
+        return $this($serviceLocator, $requestedName);
+    }
+
+    public function __invoke(ContainerInterface $container, $name, $options = [])
+    {
+        $entityManager = $container->get(EntityManager::class);
         return new IncomingMessageHandlerService(
-            $serviceLocator->get(CommandBusInterface::class),
+            $container->get(CommandBusInterface::class),
             new DoctrineRepository(Mapping::class, $entityManager)
         );
     }
